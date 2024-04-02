@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <string.h>
 using namespace std;
 
 int Slot(string s)
@@ -74,7 +75,7 @@ int Slot(string s)
 }
 
 
-string *getm(const string &filePath, int &size)
+void input(string &filePath, int &size, int &totalNames, bool **&Nametoshow, bool **&Nametoslot, int *&countAvailableslots, int *&countfavoriteshows)
 {
     ifstream inputFile(filePath);
 
@@ -97,7 +98,11 @@ string *getm(const string &filePath, int &size)
         cerr << "Failed to read integer input from first line: " << filePath << endl;
         return nullptr;
     }
-
+    if (!(ss >> totalNames))
+    {
+        cout << "Failed to read total number of names from first line: " << filePath << endl;
+        return;
+    }
     string *show = new string[size];
     int i = 0;
 
@@ -113,25 +118,70 @@ string *getm(const string &filePath, int &size)
             i++;
         }
     }
+    
+    string Name[totalNames];
+    Nametoshow = new bool *[totalNames];
+    Nametoslot = new bool *[totalNames];
+    countAvailableslots = new int[totalNames];
+    countfavoriteshows = new int[totalNames];
 
+
+    for (size_t i = 0; i < totalNames; i++)
+    {
+        Nametoshow[i] = new bool[size]{false};
+        Nametoslot[i] = new bool[168]{false};
+    }
+    for(int k = 0 ; k< totalNames; k++){
+        getline(inputFile, line);
+        Name[k] = line;
+
+        getline(inputFile, line);
+
+        stringstream sl(line);
+        string token;
+        int countAvailslots = 0;
+        while (getline(sl, token, ',')) {
+            if (token == "\n") break;
+            token.erase(0, token.find_first_not_of(' '));
+            token.erase(token.find_last_not_of(' ') + 1);
+            int slot = Slottoint(token);
+            if (slot >= 0 && slot < 168) {Nametoslot[k][slot] = true; 
+            countAvailslots++;
+            }
+        }
+        countAvailableslots[k] = countAvailslots;
+
+        int countfavoriteshow = 0;
+        getline(inputFile, line);
+        stringstream sh(line);
+        string token2;
+        while (getline(sh, token2, ','))
+        {
+            if (token2 == "\n") break;
+            token2.erase(0, token2.find_first_not_of(' '));
+            token2.erase(token2.find_last_not_of(' ') + 1);
+            for (size_t j = 0; j < size; j++)
+            {
+            if (token2 == show[j]){ Nametoshow[k][j] = true; countfavoriteshow++;}
+            }
+        }
+        countfavoriteshows[k] = countfavoriteshow;
+    }  
+}
     inputFile.close();
-    return show;
+    
 }
 
 int main()
 {
-    int size = 0;
-    string *show = getm("C:\\Users\\Manan\\Documents\\project\\in.txt", size);
-    if (show == nullptr)
-    {
-        return 1;
-    }
+    string filePath = "C:\\Users\\Manan\\Documents\\project\\in.txt";
+    int size;
+    bool **Nametoshow;
+    bool **Nametoslot;
+    int totalNames;
+    int *countAvailableslots;
+    int *countfavoriteshows;
+    input(filePath, size, totalNames, Nametoshow, Nametoslot, countAvailableslots, countfavoriteshows);
 
-    for (int i = 0; i < size; i++)
-    {
-        cout << show[i] << endl;
-    }
-
-    delete[] show;
     return 0;
 }
