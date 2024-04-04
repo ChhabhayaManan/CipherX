@@ -5,7 +5,7 @@
 #include <string.h>
 using namespace std;
 
-int Slot(string s)
+int Slottoint(string s)
 {
     char str[4];
     for (int i = 0; i < 3; ++i)
@@ -74,7 +74,36 @@ int Slot(string s)
     return -1; 
 }
 
-
+string slotToString(int num){
+    string slot;
+    if(num <= 0 || num > 168){
+        slot = "Invalid slot number!";
+    }
+    else{
+        if(num>=1 && num<=24){
+            slot = "MON " + to_string(num-1) + "-" + to_string(num);
+        }
+        else if(num>=25 && num<=48){
+            slot = "TUE " + to_string(num-25) + "-" + to_string(num-24);
+        }
+        else if(num>=49 && num<=72){
+            slot = "WED " + to_string(num-49) + "-" + to_string(num-48);
+        }
+        else if(num>=73 && num<=96){
+            slot = "THU " + to_string(num-73) + "-" + to_string(num-72);
+        }
+        else if(num>=97 && num<=120){
+            slot = "FRI " + to_string(num-97) + "-" + to_string(num-96);
+        }
+        else if(num>=121 && num<=144){
+            slot = "SAT " + to_string(num-121) + "-" + to_string(num-120);
+        }
+        else if(num>=145 && num<=168){
+            slot = "SUN " + to_string(num-145) + "-" + to_string(num-144);
+        }
+    }
+    return slot;
+}
 void input(string &filePath, int &size, int &totalNames, bool **&Nametoshow, bool **&Nametoslot, int *&countAvailableslots, int *&countfavoriteshows)
 {
     ifstream inputFile(filePath);
@@ -82,21 +111,21 @@ void input(string &filePath, int &size, int &totalNames, bool **&Nametoshow, boo
     if (!inputFile.is_open() || inputFile.fail())
     {
         cerr << "Failed to open file: " << filePath << endl;
-        return nullptr;
+        return ;
     }
 
     string line;
     if (!getline(inputFile, line))
     {
         cerr << "Failed to read first line from file: " << filePath << endl;
-        return nullptr;
+        return ;
     }
 
     stringstream ss(line);
     if (!(ss >> size))
     {
         cerr << "Failed to read integer input from first line: " << filePath << endl;
-        return nullptr;
+        return;
     }
     if (!(ss >> totalNames))
     {
