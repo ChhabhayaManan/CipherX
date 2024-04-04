@@ -43,6 +43,33 @@ void storeData(int memTotal, int slotTotal, int seriesTotal){
         }
     }
 }
+void storeSlotVsSeries(int memTotal,int slotTotal, int seriesTotal){
+    slotVsSeries = new short int*[slotTotal+1];
+    for(int i = 0; i < slotTotal+1; i++){
+        slotVsSeries[i] = new short int[seriesTotal+1](); // Initialize with default value (0)
+    }
+
+    for(int i = 0; i < slotTotal; i++){
+        for(int j = 0; j < seriesTotal; j++){
+            for(int k = 0; k < memTotal; k++){
+                if(memVsSlot[k][i] == true && memVsSeries[k][j] == true){
+                    slotVsSeries[i][j]++;
+                }
+            }
+            slotVsSeries[i][seriesTotal] += slotVsSeries[i][j];
+            slotVsSeries[slotTotal][j] += slotVsSeries[i][j];
+        }
+    }
+}
+
+void displaySlotVsSeries(int slotTotal, int seriesTotal){
+    for(int i = 0; i < slotTotal+1; i++){
+        for(int j = 0; j < seriesTotal+1; j++){
+            cout << slotVsSeries[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
 
 
 void deallocateMemory(int memTotal){
