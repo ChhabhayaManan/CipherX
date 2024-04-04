@@ -4,7 +4,7 @@ using namespace std;
 
 bool **memVsSlot;
 bool **memVsSeries;
-int **slotVsSeries;
+short int **slotVsSeries;
 
 void storeData(int memTotal, int slotTotal, int seriesTotal){
     memVsSlot = new bool*[memTotal];
@@ -72,6 +72,65 @@ void displaySlotVsSeries(int slotTotal, int seriesTotal){
 }
 
 
+void findMax(int memTotal, int slotTotal, int seriesTotal){
+    vector<int> mAX;
+    mAX.push_back(-1);
+    mAX.push_back(-1);
+    mAX.push_back(-1);
+    
+    while(mAX[2] != 0){
+        mAX.clear();
+        mAX.push_back(0);
+        mAX.push_back(0);
+        mAX.push_back(0);
+        for(int i = 0; i < slotTotal; i++){
+            for(int j = 0; j < seriesTotal; j++){
+                if(slotVsSeries[i][j] > mAX[2]){
+                    mAX.clear();
+                    mAX.push_back(i);
+                    mAX.push_back(j);
+                    mAX.push_back(slotVsSeries[i][j]);
+                    for(int k = 0; k < memTotal; k++){
+                        if(memVsSlot[k][i] == true && memVsSeries[k][j] == true){
+                            mAX.push_back(k);
+                        }
+                    } 
+                }
+                else if(slotVsSeries[i][j] == mAX[2]){
+                    if((slotVsSeries[i][seriesTotal] < slotVsSeries[mAX[0]][seriesTotal])  && (i != mAX[0])){
+                        mAX.clear();
+                        mAX.push_back(i);
+                        mAX.push_back(j);
+                        mAX.push_back(slotVsSeries[i][j]);
+                        for(int k = 0; k < memTotal; k++){
+                            if(memVsSlot[k][i] == true && memVsSeries[k][j] == true){
+                                mAX.push_back(k);
+                            }
+                        } 
+                    }
+                }
+            }
+        }   
+        cout << "Slot " << mAX[0]+1 << " Series " << mAX[1]+1 << " : " << endl;
+
+        for(int l= 3; l < mAX.size(); l++){
+            for(int k = 0; k < slotTotal; k++){
+                if(memVsSlot[mAX[l]][k] == true && memVsSeries[mAX[l]][mAX[1]] == true){
+                    slotVsSeries[k][mAX[1]]--;
+                    slotVsSeries[slotTotal][mAX[1]]--;
+                }
+            }
+            memVsSeries[mAX[l]][mAX[1]] = false;
+        }
+        for(int k = 0; k < memTotal; k++){
+            memVsSlot[k][mAX[0]] = false;
+        }
+        slotVsSeries[mAX[0]] = {0};
+        storeSlotVsSeries(memTotal, slotTotal, seriesTotal);
+    }
+
+}
+
 void deallocateMemory(int memTotal){
     for(int i = 0; i < memTotal; i++){
         delete[] memVsSlot[i];
@@ -91,5 +150,8 @@ int main() {
     cout << "Series : ";
     cin >> series;
     storeData(members, slots, series);
+    storeSlotVsSeries(members, slots, series);
+    findMax(members, slots, series);
+    deallocateMemory(members);
     return 0;
 }
