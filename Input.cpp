@@ -2,7 +2,8 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#include <string.h>
+#include <vector>
+#include <cstring>
 using namespace std;
 
 int Slottoint(string s)
@@ -104,7 +105,8 @@ string slotToString(int num){
     }
     return slot;
 }
-void input(string &filePath, int &size, int &totalNames, bool **&Nametoshow, bool **&Nametoslot, int *&countAvailableslots, int *&countfavoriteshows)
+
+void input(string &filePath, int &size, int &totalNames, vector<vector<bool>> &Nametoshow, vector<vector<bool>> &Nametoslot, vector<int> &countAvailableslots, vector<int> &countfavoriteshows)
 {
     ifstream inputFile(filePath);
 
@@ -132,7 +134,7 @@ void input(string &filePath, int &size, int &totalNames, bool **&Nametoshow, boo
         cout << "Failed to read total number of names from first line: " << filePath << endl;
         return;
     }
-    string *show = new string[size];
+    vector<string> show(size);
     int i = 0;
 
     while (getline(inputFile, line) && i < size)
@@ -148,17 +150,17 @@ void input(string &filePath, int &size, int &totalNames, bool **&Nametoshow, boo
         }
     }
     
-    string Name[totalNames];
-    Nametoshow = new bool *[totalNames];
-    Nametoslot = new bool *[totalNames];
-    countAvailableslots = new int[totalNames];
-    countfavoriteshows = new int[totalNames];
+    vector<string> Name(totalNames);
+    Nametoshow.resize(totalNames);
+    Nametoslot.resize(totalNames);
+    countAvailableslots.resize(totalNames);
+    countfavoriteshows.resize(totalNames);
 
 
     for (size_t i = 0; i < totalNames; i++)
     {
-        Nametoshow[i] = new bool[size]{false};
-        Nametoslot[i] = new bool[168]{false};
+        Nametoshow[i].resize(size, false);
+        Nametoslot[i].resize(168, false);
     }
     for(int k = 0 ; k< totalNames; k++){
         getline(inputFile, line);
@@ -196,7 +198,7 @@ void input(string &filePath, int &size, int &totalNames, bool **&Nametoshow, boo
         }
         countfavoriteshows[k] = countfavoriteshow;
     }  
-}
+
     inputFile.close();
     
 }
@@ -204,12 +206,12 @@ void input(string &filePath, int &size, int &totalNames, bool **&Nametoshow, boo
 int main()
 {
     string filePath = "C:\\Users\\Manan\\Documents\\project\\in.txt";
-    int size;
-    bool **Nametoshow;
-    bool **Nametoslot;
-    int totalNames;
-    int *countAvailableslots;
-    int *countfavoriteshows;
+    int size=0;
+    vector<vector<bool>> Nametoshow;
+    vector<vector<bool>> Nametoslot;
+    vector<int> countAvailableslots;
+    vector<int> countfavoriteshows;
+    int totalNames= 0;
     input(filePath, size, totalNames, Nametoshow, Nametoslot, countAvailableslots, countfavoriteshows);
 
     return 0;
