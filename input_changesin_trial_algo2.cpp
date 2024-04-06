@@ -2,19 +2,13 @@
 using namespace std;
 #include <vector>
 
-bool **memVsSlot;
-bool **memVsSeries;
-short int **slotVsSeries;
+vector<vector<bool>> memVsSlot;
+vector<vector<bool>> memVsSeries;
+vector<vector<int>> slotVsSeries;
 
 void storeData(int memTotal, int slotTotal, int seriesTotal){
-    memVsSlot = new bool*[memTotal];
-    for(int i = 0; i < memTotal; i++){
-        memVsSlot[i] = new bool[slotTotal](); // Initialize with default value (false)
-    }
-    memVsSeries = new bool*[memTotal];
-    for(int i = 0; i < memTotal; i++){
-        memVsSeries[i] = new bool[seriesTotal](); // Initialize with default value (false)
-    }
+    memVsSlot.resize(memTotal, vector<bool>(slotTotal, false));
+    memVsSeries.resize(memTotal, vector<bool>(slotTotal, false));
     for(int i = 0; i < memTotal; i++){
         cout << "Member " << i+1 << " : " << endl;
 
@@ -48,11 +42,7 @@ void storeData(int memTotal, int slotTotal, int seriesTotal){
     }
 }
 void storeSlotVsSeries(int memTotal,int slotTotal, int seriesTotal){
-    slotVsSeries = new short int*[slotTotal+1];
-    for(int i = 0; i < slotTotal+1; i++){
-        slotVsSeries[i] = new short int[seriesTotal+1](); // Initialize with default value (0)
-    }
-
+    slotVsSeries.resize(slotTotal, vector<int>(seriesTotal+1, 0));
     for(int i = 0; i < slotTotal; i++){
         for(int j = 0; j < seriesTotal; j++){
             for(int k = 0; k < memTotal; k++){
@@ -67,7 +57,7 @@ void storeSlotVsSeries(int memTotal,int slotTotal, int seriesTotal){
 
 void displaySlotVsSeries(int slotTotal, int seriesTotal){
     for(int i = 0; i < slotTotal; i++){
-        for(int j = 0; j < seriesTotal+1; j++){
+        for(int j = 0; j < seriesTotal; j++){
             cout << slotVsSeries[i][j] << " ";
         }
         cout << endl;
@@ -76,11 +66,8 @@ void displaySlotVsSeries(int slotTotal, int seriesTotal){
 
 
 void findMax(int memTotal, int slotTotal, int seriesTotal){
-    vector<int> mAX;
+    vector<int> mAX(3);
     vector<int>cURR; 
-    mAX.push_back(-1);
-    mAX.push_back(-1);
-    mAX.push_back(-1);
     
     do{
         mAX.clear();
@@ -167,19 +154,19 @@ void findMax(int memTotal, int slotTotal, int seriesTotal){
         }
         slotVsSeries[mAX[0]] = {0};
         storeSlotVsSeries(memTotal, slotTotal, seriesTotal);
-        //displaySlotVsSeries(slotTotal, seriesTotal);
-            
     }while(mAX[2] != 0);
 
 }
-
-void deallocateMemory(int memTotal){
-    for(int i = 0; i < memTotal; i++){
-        delete[] memVsSlot[i];
-        delete[] memVsSeries[i];
+void displayremained(int memTotal, int slotTotal, int seriesTotal)
+{
+    for(int i=0;i<memTotal;i++)
+    {
+        for(int j=0;j<seriesTotal;j++)
+        {
+            if(memVsSeries[i][j])
+            cout<<"Series : "<<j<<" Member : "<<i<<endl;
+        }
     }
-    delete[] memVsSlot;
-    delete[] memVsSeries;
 }
 
 
@@ -194,6 +181,8 @@ int main() {
     storeData(members, slots, series);
     storeSlotVsSeries(members, slots, series);
     findMax(members, slots, series);
-    deallocateMemory(members);
+    cout<<"Rmained person information"<<endl;
+    displayremained(members, slots, series);
+    
     return 0;
 }
