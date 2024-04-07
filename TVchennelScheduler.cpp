@@ -1,19 +1,21 @@
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <vector>
 #include <string>
-using namespace std; 
 #include <cstring>
 #include <iomanip>
 #include <algorithm>
+#include <queue>
+using namespace std; 
 
 vector<vector<bool>> memVsSeries;
 vector<vector<bool>> memVsSlot;
 vector<vector<int>> slotVsSeries;
-vector<pair<int, int>> sortedSlotNSeries;
 vector<string> show;
 vector<string> Name;
+priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
 
 int Slottoint(string s)
 {
@@ -290,7 +292,7 @@ void findMax(int memTotal, int slotTotal, int seriesTotal){
             return;
         }
         
-        sortedSlotNSeries.push_back(make_pair(mAX[0], mAX[1]));
+        pq.push(make_pair(mAX[0], mAX[1]));
 
         for(int l= 3; l < mAX.size(); l++){
             for(int k = 0; k < 168; k++){
@@ -342,9 +344,10 @@ int main()
     showRemainedMembers(memTotal, seriesTotal);
     cout << "The schedule is as follows: \n";
     cout << "========================================================================\n";
-    sort(sortedSlotNSeries.begin(), sortedSlotNSeries.end());
-    for(int i = 0; i < sortedSlotNSeries.size(); i++){
-        cout << setw(10) << left << slotToString(sortedSlotNSeries[i].first) << " ---> " << show[sortedSlotNSeries[i].second] << endl;
+    while(!pq.empty()){
+        pair<int, int> p = pq.top();
+        pq.pop();
+        cout << slotToString(p.first) << " : " << show[p.second] << endl;
     }
     cout << "========================================================================\n";
     return 0;
