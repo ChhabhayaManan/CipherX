@@ -81,6 +81,7 @@ int Slottoint(string s)
 
 string slotToString(int num){
     string slot;
+    num++;
     if(num <= 0 || num > 168){
         slot = "Invalid slot number!";
     }
