@@ -176,7 +176,7 @@ void input(string &filePath, int &seriesTotal, int &memTotal, vector<vector<bool
             token.erase(0, token.find_first_not_of(' '));
             token.erase(token.find_last_not_of(' ') + 1);
             int slot = Slottoint(token);
-            if (slot >= 0 && slot < 168) {memVsSlot[k][slot] = true; 
+            if (slot >= 0 && slot < 168) {memVsSlot[k][slot-1] = true; 
             countAvailslots++;
             }
         }
