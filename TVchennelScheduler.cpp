@@ -272,7 +272,7 @@ void findMax(int memTotal, int slotTotal, int seriesTotal){
                             }
                             }
                         }
-                        if(count1 > count2){
+                        if(count1 < count2){
                             mAX.clear();
                             mAX.push_back(i);
                             mAX.push_back(j);
