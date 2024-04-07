@@ -313,19 +313,24 @@ void findMax(int memTotal, int slotTotal, int seriesTotal){
 }
 
 void showRemainedMembers(int memTotal, int seriesTotal) {
+    cout << "========================================================================\n";
     cout << "Remaining members: \n";
+    cout << "========================================================================\n";
     for(int i = 0; i < memTotal; ++i) {
         for(int j = 0; j < seriesTotal; ++j) {
             if(memVsSeries[i][j] == true) {
-                cout << "Member " << Name[i] << " : " << show[j] << endl;
+                cout << setw(10) << left << Name[i] << " : " << show[j] << endl;
             }
         }
     }
+    cout << "========================================================================\n";
 }
 
 int main()
 {
-    string path = "C:\\Users\\Manan\\Documents\\project\\in.txt";
+    string path;
+    cout << "Enter The File Path : ";
+    cin >> path;
     int seriesTotal=0;
 
     vector<int> countAvailableslots;
@@ -336,10 +341,11 @@ int main()
     findMax(memTotal, 168, seriesTotal);
     showRemainedMembers(memTotal, seriesTotal);
     cout << "The schedule is as follows: \n";
+    cout << "========================================================================\n";
     sort(sortedSlotNSeries.begin(), sortedSlotNSeries.end());
     for(int i = 0; i < sortedSlotNSeries.size(); i++){
-        cout << setw(10) << left << slotToString(sortedSlotNSeries[i].first) << " : " << show[sortedSlotNSeries[i].second] << endl;
+        cout << setw(10) << left << slotToString(sortedSlotNSeries[i].first) << " ---> " << show[sortedSlotNSeries[i].second] << endl;
     }
-
+    cout << "========================================================================\n";
     return 0;
 }
