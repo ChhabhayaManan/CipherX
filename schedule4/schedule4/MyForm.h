@@ -90,12 +90,12 @@ namespace $safeprojectname$ {
             this->label2->BackColor = System::Drawing::SystemColors::Control;
             this->label2->Font = (gcnew System::Drawing::Font(L"Segoe UI Symbol", 16.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
-            this->label2->ForeColor = System::Drawing::Color::Red;
+            this->label2->ForeColor = System::Drawing::SystemColors::ControlDark;
             this->label2->Location = System::Drawing::Point(175, 85);
             this->label2->Name = L"label2";
             this->label2->Size = System::Drawing::Size(581, 38);
             this->label2->TabIndex = 14;
-            this->label2->Text = L"_______________________________________________";
+            this->label2->Text = L"_________________";
             // 
             // label1
             // 
@@ -154,6 +154,7 @@ namespace $safeprojectname$ {
             this->textBox2->Font = (gcnew System::Drawing::Font(L"Candara", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->textBox2->ForeColor = System::Drawing::SystemColors::InactiveCaptionText;
+            this->textBox2->HideSelection = false;
             this->textBox2->Location = System::Drawing::Point(135, 314);
             this->textBox2->Multiline = true;
             this->textBox2->Name = L"textBox2";
@@ -169,6 +170,7 @@ namespace $safeprojectname$ {
             this->textBox3->Font = (gcnew System::Drawing::Font(L"Candara", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->textBox3->ForeColor = System::Drawing::SystemColors::InactiveCaptionText;
+            this->textBox3->HideSelection = false;
             this->textBox3->Location = System::Drawing::Point(770, 314);
             this->textBox3->Multiline = true;
             this->textBox3->Name = L"textBox3";
@@ -185,10 +187,9 @@ namespace $safeprojectname$ {
             this->label4->ForeColor = System::Drawing::Color::Black;
             this->label4->Location = System::Drawing::Point(478, 201);
             this->label4->Name = L"label4";
-            this->label4->Size = System::Drawing::Size(453, 66);
+            this->label4->Size = System::Drawing::Size(441, 64);
             this->label4->TabIndex = 18;
             this->label4->Text = L"Schedule Of Series";
-            this->label4->Click += gcnew System::EventHandler(this, &MyForm::label4_Click);
             // 
             // MyForm
             // 
@@ -318,13 +319,16 @@ namespace $safeprojectname$ {
         }
 
 
-        void input(std::string& filePath, int& sIZE, int& totalNames, bool**& memVsSeries, bool**& Nametoslot)
+        void input(std::string& filePath, int& sIZE, int& totalNames, bool*& memVsSeries, bool*& Nametoslot)
         {
             std::ifstream inputFile(filePath);
 
             if (!inputFile.is_open() || inputFile.fail())
             {
                 label2->Text = "File not found!";
+                label2->ForeColor = System::Drawing::Color::Red;
+                textBox2->Text = "";
+                textBox3->Text = "";
                 return;
             }
 
@@ -332,6 +336,9 @@ namespace $safeprojectname$ {
             if (!getline(inputFile, line))
             {
                 label2->Text = "Failed to read first line!";
+                label2->ForeColor = System::Drawing::Color::Red;
+                textBox2->Text = "";
+                textBox3->Text = "";
                 return;
             }
 
@@ -339,11 +346,17 @@ namespace $safeprojectname$ {
             if (!(ss >> sIZE))
             {
                 label2->Text = "Failed to read total number of shows from first line!";
+                label2->ForeColor = System::Drawing::Color::Red;
+                textBox2->Text = "";
+                textBox3->Text = "";
                 return;
             }
             if (!(ss >> totalNames))
             {
                 label2->Text = "Failed to read total number of members from first line!";
+                label2->ForeColor = System::Drawing::Color::Red;
+                textBox2->Text = "";
+                textBox3->Text = "";
                 return;
             }
             int i = 0;
@@ -407,7 +420,10 @@ namespace $safeprojectname$ {
                         if (token2 == show[j]) { memVsSeries[k][j] = true; countfavoriteshow++; }
                     }
                 }
-            }  inputFile.close();
+            }
+            label2->Text = "File read successfully!";
+            label2->ForeColor = System::Drawing::Color::Black;
+            inputFile.close();
         }
 
         void storeSlotVsSeries(int memTotal, int slotTotal, int seriesTotal) {
@@ -548,8 +564,6 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 	findMax(totalNames, 168, sIZE);
 }
 private: System::Void textBox2_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void label4_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }
