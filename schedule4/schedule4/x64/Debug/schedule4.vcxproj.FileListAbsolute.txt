@@ -1,0 +1,3 @@
+C:\Users\anu19\Desktop\Semester 2\DSA\CipherX_Capstone\cipherXGUI\schedule4\schedule4\x64\Debug\schedule4.vcxproj.AssemblyReference.cache
+C:\Users\anu19\Desktop\Semester 2\DSA\CipherX_Capstone\cipherXGUI\schedule4\schedule4\x64\Debug\schedule4.MyForm.resources
+C:\Users\anu19\Desktop\Semester 2\DSA\CipherX_Capstone\cipherXGUI\schedule4\schedule4\x64\Debug\schedule4.vcxproj.GenerateResource.cache
