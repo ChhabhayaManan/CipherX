@@ -100,7 +100,7 @@ namespace $safeprojectname$ {
             this->label2->Font = (gcnew System::Drawing::Font(L"Segoe UI Symbol", 16.2F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->label2->ForeColor = System::Drawing::SystemColors::ControlDark;
-            this->label2->Location = System::Drawing::Point(175, 85);
+            this->label2->Location = System::Drawing::Point(235, 85);
             this->label2->Name = L"label2";
             this->label2->Size = System::Drawing::Size(581, 38);
             this->label2->TabIndex = 14;
@@ -115,9 +115,9 @@ namespace $safeprojectname$ {
                 static_cast<System::Int32>(static_cast<System::Byte>(64)));
             this->label1->Location = System::Drawing::Point(89, 85);
             this->label1->Name = L"label1";
-            this->label1->Size = System::Drawing::Size(91, 38);
+            this->label1->Size = System::Drawing::Size(140, 38);
             this->label1->TabIndex = 13;
-            this->label1->Text = L"Error: ";
+            this->label1->Text = L"Message: ";
             // 
             // textBox1
             // 
@@ -399,7 +399,7 @@ namespace $safeprojectname$ {
 
         void input(std::string& filePath, int& sIZE, int& totalNames, bool**& memVsSeries, bool**& Nametoslot)
         {
-	    textBox2->Text = "";
+            textBox2->Text = "";
             textBox3->Text = "";
             textBox4->Text = "";
             std::ifstream inputFile(filePath);
@@ -612,9 +612,9 @@ namespace $safeprojectname$ {
                     count++;
                 }
                 else {
-			textBox3->Text += gcnew String(slotToString(mAX[0]).c_str()) + " --> " + gcnew String((show[mAX[1]]).c_str()) + Environment::NewLine;
-			count++;
-		}
+					textBox3->Text += gcnew String(slotToString(mAX[0]).c_str()) + " --> " + gcnew String((show[mAX[1]]).c_str()) + Environment::NewLine;
+					count++;
+				}
 
                 for (int l = 3; l < mAX.size(); l++) {
                     for (int k = 0; k < slotTotal; k++) {
