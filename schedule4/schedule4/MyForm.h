@@ -399,6 +399,9 @@ namespace $safeprojectname$ {
 
         void input(std::string& filePath, int& sIZE, int& totalNames, bool**& memVsSeries, bool**& Nametoslot)
         {
+	    textBox2->Text = "";
+            textBox3->Text = "";
+            textBox4->Text = "";
             std::ifstream inputFile(filePath);
 
             if (!inputFile.is_open() || inputFile.fail())
