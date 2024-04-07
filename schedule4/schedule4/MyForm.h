@@ -587,7 +587,7 @@ namespace $safeprojectname$ {
                                         }
                                     }
                                 }
-                                if (count1 > count2) {
+                                if (count1 < count2) {
                                     mAX.clear();
                                     mAX.push_back(i);
                                     mAX.push_back(j);
@@ -612,9 +612,9 @@ namespace $safeprojectname$ {
                     count++;
                 }
                 else {
-					textBox3->Text += gcnew String(slotToString(mAX[0]).c_str()) + " --> " + gcnew String((show[mAX[1]]).c_str()) + Environment::NewLine;
-					count++;
-				}
+			textBox3->Text += gcnew String(slotToString(mAX[0]).c_str()) + " --> " + gcnew String((show[mAX[1]]).c_str()) + Environment::NewLine;
+			count++;
+		}
 
                 for (int l = 3; l < mAX.size(); l++) {
                     for (int k = 0; k < slotTotal; k++) {
