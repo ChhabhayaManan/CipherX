@@ -11,6 +11,7 @@ bool** memVsSeries;
 bool** memVsSlot;
 short int** slotVsSeries;
 std::string* show;
+std::string* name;
 
 #pragma once
 
@@ -57,6 +58,10 @@ namespace $safeprojectname$ {
 	private: System::Windows::Forms::TextBox^ textBox2;
     private: System::Windows::Forms::TextBox^ textBox3;
     private: System::Windows::Forms::Label^ label4;
+    private: System::Windows::Forms::ContextMenuStrip^ contextMenuStrip1;
+    private: System::Windows::Forms::TextBox^ textBox4;
+    private: System::Windows::Forms::Label^ label5;
+    private: System::ComponentModel::IContainer^ components;
 
 
 
@@ -65,7 +70,7 @@ namespace $safeprojectname$ {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -74,6 +79,7 @@ namespace $safeprojectname$ {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+            this->components = (gcnew System::ComponentModel::Container());
             this->label2 = (gcnew System::Windows::Forms::Label());
             this->label1 = (gcnew System::Windows::Forms::Label());
             this->textBox1 = (gcnew System::Windows::Forms::TextBox());
@@ -82,6 +88,9 @@ namespace $safeprojectname$ {
             this->textBox2 = (gcnew System::Windows::Forms::TextBox());
             this->textBox3 = (gcnew System::Windows::Forms::TextBox());
             this->label4 = (gcnew System::Windows::Forms::Label());
+            this->contextMenuStrip1 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
+            this->textBox4 = (gcnew System::Windows::Forms::TextBox());
+            this->label5 = (gcnew System::Windows::Forms::Label());
             this->SuspendLayout();
             // 
             // label2
@@ -95,7 +104,7 @@ namespace $safeprojectname$ {
             this->label2->Name = L"label2";
             this->label2->Size = System::Drawing::Size(581, 38);
             this->label2->TabIndex = 14;
-            this->label2->Text = L"_________________";
+            this->label2->Text = L"_______________________________________________";
             // 
             // label1
             // 
@@ -151,32 +160,31 @@ namespace $safeprojectname$ {
             // textBox2
             // 
             this->textBox2->BackColor = System::Drawing::SystemColors::Control;
-            this->textBox2->Font = (gcnew System::Drawing::Font(L"Candara", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+            this->textBox2->Font = (gcnew System::Drawing::Font(L"Segoe UI Symbol", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->textBox2->ForeColor = System::Drawing::SystemColors::InactiveCaptionText;
             this->textBox2->HideSelection = false;
-            this->textBox2->Location = System::Drawing::Point(135, 314);
+            this->textBox2->Location = System::Drawing::Point(12, 314);
             this->textBox2->Multiline = true;
             this->textBox2->Name = L"textBox2";
             this->textBox2->ReadOnly = true;
             this->textBox2->ScrollBars = System::Windows::Forms::ScrollBars::Both;
-            this->textBox2->Size = System::Drawing::Size(485, 495);
+            this->textBox2->Size = System::Drawing::Size(412, 495);
             this->textBox2->TabIndex = 16;
-            this->textBox2->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox2_TextChanged);
             // 
             // textBox3
             // 
             this->textBox3->BackColor = System::Drawing::SystemColors::Control;
-            this->textBox3->Font = (gcnew System::Drawing::Font(L"Candara", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+            this->textBox3->Font = (gcnew System::Drawing::Font(L"Segoe UI Symbol", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->textBox3->ForeColor = System::Drawing::SystemColors::InactiveCaptionText;
             this->textBox3->HideSelection = false;
-            this->textBox3->Location = System::Drawing::Point(770, 314);
+            this->textBox3->Location = System::Drawing::Point(462, 314);
             this->textBox3->Multiline = true;
             this->textBox3->Name = L"textBox3";
             this->textBox3->ReadOnly = true;
             this->textBox3->ScrollBars = System::Windows::Forms::ScrollBars::Both;
-            this->textBox3->Size = System::Drawing::Size(485, 495);
+            this->textBox3->Size = System::Drawing::Size(413, 495);
             this->textBox3->TabIndex = 17;
             // 
             // label4
@@ -185,17 +193,52 @@ namespace $safeprojectname$ {
             this->label4->Font = (gcnew System::Drawing::Font(L"Candara", 31.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
                 static_cast<System::Byte>(0)));
             this->label4->ForeColor = System::Drawing::Color::Black;
-            this->label4->Location = System::Drawing::Point(478, 201);
+            this->label4->Location = System::Drawing::Point(272, 223);
             this->label4->Name = L"label4";
             this->label4->Size = System::Drawing::Size(441, 64);
             this->label4->TabIndex = 18;
             this->label4->Text = L"Schedule Of Series";
             // 
+            // contextMenuStrip1
+            // 
+            this->contextMenuStrip1->ImageScalingSize = System::Drawing::Size(20, 20);
+            this->contextMenuStrip1->Name = L"contextMenuStrip1";
+            this->contextMenuStrip1->Size = System::Drawing::Size(61, 4);
+            // 
+            // textBox4
+            // 
+            this->textBox4->BackColor = System::Drawing::SystemColors::Control;
+            this->textBox4->Font = (gcnew System::Drawing::Font(L"Segoe UI Symbol", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+                static_cast<System::Byte>(0)));
+            this->textBox4->ForeColor = System::Drawing::SystemColors::InactiveCaptionText;
+            this->textBox4->HideSelection = false;
+            this->textBox4->Location = System::Drawing::Point(961, 314);
+            this->textBox4->Multiline = true;
+            this->textBox4->Name = L"textBox4";
+            this->textBox4->ReadOnly = true;
+            this->textBox4->ScrollBars = System::Windows::Forms::ScrollBars::Both;
+            this->textBox4->Size = System::Drawing::Size(485, 495);
+            this->textBox4->TabIndex = 20;
+            // 
+            // label5
+            // 
+            this->label5->AutoSize = true;
+            this->label5->Font = (gcnew System::Drawing::Font(L"Candara", 31.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+                static_cast<System::Byte>(0)));
+            this->label5->ForeColor = System::Drawing::Color::Black;
+            this->label5->Location = System::Drawing::Point(992, 223);
+            this->label5->Name = L"label5";
+            this->label5->Size = System::Drawing::Size(475, 64);
+            this->label5->TabIndex = 21;
+            this->label5->Text = L"Remained Members";
+            // 
             // MyForm
             // 
             this->AutoScaleDimensions = System::Drawing::SizeF(13, 31);
             this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-            this->ClientSize = System::Drawing::Size(1578, 821);
+            this->ClientSize = System::Drawing::Size(1829, 821);
+            this->Controls->Add(this->label5);
+            this->Controls->Add(this->textBox4);
             this->Controls->Add(this->label4);
             this->Controls->Add(this->textBox3);
             this->Controls->Add(this->textBox2);
@@ -226,25 +269,60 @@ namespace $safeprojectname$ {
             }
             else {
                 if (num >= 1 && num <= 24) {
-                    slot = "MON " + std::to_string(num - 1) + "-" + std::to_string(num);
+                    if(num-1 >= 10)
+                        slot = "MON " + std::to_string(num - 1) + "-" + std::to_string(num);
+                    else if(num - 1 == 9)
+						slot = "MON 0" + std::to_string(num - 1) + "-" + std::to_string(num);
+					else
+						slot = "MON 0" + std::to_string(num - 1) + "-0" + std::to_string(num);
                 }
                 else if (num >= 25 && num <= 48) {
-                    slot = "TUE " + std::to_string(num - 25) + "-" + std::to_string(num - 24);
+                    if (num - 25 >= 10)
+                        slot = "TUE " + std::to_string(num - 25) + "-" + std::to_string(num - 24) + "  ";
+                    else if (num - 25 == 9)
+                        slot = "TUE 0" + std::to_string(num - 25) + "-" + std::to_string(num - 24) + "  ";
+                    else
+                        slot = "TUE 0" + std::to_string(num - 25) + "-0" + std::to_string(num - 24) + "  ";
                 }
                 else if (num >= 49 && num <= 72) {
-                    slot = "WED " + std::to_string(num - 49) + "-" + std::to_string(num - 48);
+                    if(num - 49 >= 10)
+						slot = "WED " + std::to_string(num - 49) + "-" + std::to_string(num - 48);
+					else if (num - 49 == 9)
+						slot = "WED 0" + std::to_string(num - 49) + "-" + std::to_string(num - 48);
+					else
+						slot = "WED 0" + std::to_string(num - 49) + "-0" + std::to_string(num - 48);
                 }
                 else if (num >= 73 && num <= 96) {
-                    slot = "THU " + std::to_string(num - 73) + "-" + std::to_string(num - 72);
+                    if(num - 73 >= 10)
+                        slot = "THU " + std::to_string(num - 73) + "-" + std::to_string(num - 72) + " ";
+                    else if (num - 73 == 9)
+                        slot = "THU 0" + std::to_string(num - 73) + "-" + std::to_string(num - 72) + " ";
+					else
+						slot = "THU 0" + std::to_string(num - 73) + "-0" + std::to_string(num - 72) + " ";
                 }
                 else if (num >= 97 && num <= 120) {
-                    slot = "FRI " + std::to_string(num - 97) + "-" + std::to_string(num - 96);
+                    if(num - 97 >= 10)
+						slot = "FRI " + std::to_string(num - 97) + "-" + std::to_string(num - 96) + "   ";
+					else if (num - 97 == 9)
+						slot = "FRI 0" + std::to_string(num - 97) + "-" + std::to_string(num - 96) + "   ";
+                    else
+                        slot = "FRI 0" + std::to_string(num - 97) + "-0" + std::to_string(num - 96) + "   ";
                 }
                 else if (num >= 121 && num <= 144) {
-                    slot = "SAT " + std::to_string(num - 121) + "-" + std::to_string(num - 120);
+                    if(num - 121 >= 10)
+						slot = "SAT " + std::to_string(num - 121) + "-" + std::to_string(num - 120) + "  ";
+					else if (num - 121 == 9)
+						slot = "SAT 0" + std::to_string(num - 121) + "-" + std::to_string(num - 120) + "  ";
+					else
+						slot = "SAT 0" + std::to_string(num - 121) + "-0" + std::to_string(num - 120) + "  ";
                 }
                 else if (num >= 145 && num <= 168) {
-                    slot = "SUN " + std::to_string(num - 145) + "-" + std::to_string(num - 144);
+                    if(num - 145 >= 10)
+                        slot = "SUN " + std::to_string(num - 145) + "-" + std::to_string(num - 144) + " ";
+                    else if (num - 145 == 9)
+                        slot = "SUN 0" + std::to_string(num - 145) + "-" + std::to_string(num - 144) + " ";
+					else
+						slot = "SUN 0" + std::to_string(num - 145) + "-0" + std::to_string(num - 144) + " ";
                 }
             }
             return slot;
@@ -319,7 +397,7 @@ namespace $safeprojectname$ {
         }
 
 
-        void input(std::string& filePath, int& sIZE, int& totalNames, bool*& memVsSeries, bool*& Nametoslot)
+        void input(std::string& filePath, int& sIZE, int& totalNames, bool**& memVsSeries, bool**& Nametoslot)
         {
             std::ifstream inputFile(filePath);
 
@@ -329,6 +407,7 @@ namespace $safeprojectname$ {
                 label2->ForeColor = System::Drawing::Color::Red;
                 textBox2->Text = "";
                 textBox3->Text = "";
+                textBox4->Text = "";
                 return;
             }
 
@@ -339,6 +418,7 @@ namespace $safeprojectname$ {
                 label2->ForeColor = System::Drawing::Color::Red;
                 textBox2->Text = "";
                 textBox3->Text = "";
+                textBox4->Text = "";
                 return;
             }
 
@@ -349,6 +429,7 @@ namespace $safeprojectname$ {
                 label2->ForeColor = System::Drawing::Color::Red;
                 textBox2->Text = "";
                 textBox3->Text = "";
+                textBox4->Text = "";
                 return;
             }
             if (!(ss >> totalNames))
@@ -357,6 +438,7 @@ namespace $safeprojectname$ {
                 label2->ForeColor = System::Drawing::Color::Red;
                 textBox2->Text = "";
                 textBox3->Text = "";
+                textBox4->Text = "";
                 return;
             }
             int i = 0;
@@ -375,8 +457,7 @@ namespace $safeprojectname$ {
                 }
             }
 
-            std::string* Name;
-            Name = new std::string[totalNames];
+            name = new std::string[totalNames];
             memVsSeries = new bool* [totalNames];
             memVsSlot = new bool* [totalNames];
 
@@ -388,7 +469,7 @@ namespace $safeprojectname$ {
             }
             for (int k = 0; k < totalNames; k++) {
                 getline(inputFile, line);
-                Name[k] = line;
+                name[k] = line;
 
                 getline(inputFile, line);
 
@@ -524,11 +605,11 @@ namespace $safeprojectname$ {
                     return;
                 }
                 if (count % 2 == 1) {
-                    textBox2->Text += gcnew String(slotToString(mAX[0]).c_str()) + " " + gcnew String((show[mAX[1]]).c_str()) + Environment::NewLine;
+                    textBox2->Text += gcnew String(slotToString(mAX[0]).c_str()) + " --> " + gcnew String((show[mAX[1]]).c_str()) + Environment::NewLine;
                     count++;
                 }
                 else {
-					textBox3->Text += gcnew String(slotToString(mAX[0]).c_str()) + " " + gcnew String((show[mAX[1]]).c_str()) + Environment::NewLine;
+					textBox3->Text += gcnew String(slotToString(mAX[0]).c_str()) + " --> " + gcnew String((show[mAX[1]]).c_str()) + Environment::NewLine;
 					count++;
 				}
 
@@ -552,6 +633,16 @@ namespace $safeprojectname$ {
 
         }
 
+        void showRemainedMembers(int memTotal, int seriesTotal) {
+            for (int i = 0; i < memTotal; ++i) {
+                for (int j = 0; j < seriesTotal; ++j) {
+                    if (memVsSeries[i][j] == true) {
+                        textBox4->Text += gcnew String((name[i]).c_str()) + " : " + gcnew String((show[j]).c_str()) + Environment::NewLine;
+                    }
+                }
+            }
+        }
+
 
 		//=======================================================================================================
 
@@ -562,8 +653,7 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 	input(filePath, sIZE, totalNames, memVsSeries, memVsSlot);
 	storeSlotVsSeries(totalNames, 168, sIZE);
 	findMax(totalNames, 168, sIZE);
-}
-private: System::Void textBox2_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+    showRemainedMembers(totalNames, sIZE);
 }
 };
 }
