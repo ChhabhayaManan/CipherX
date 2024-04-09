@@ -17,45 +17,45 @@ std::string* name;
 
 namespace $safeprojectname$ {
 
-	using namespace System;
-	using namespace System::ComponentModel;
-	using namespace System::Collections;
-	using namespace System::Windows::Forms;
-	using namespace System::Data;
-	using namespace System::Drawing;
+    using namespace System;
+    using namespace System::ComponentModel;
+    using namespace System::Collections;
+    using namespace System::Windows::Forms;
+    using namespace System::Data;
+    using namespace System::Drawing;
 
-	/// <summary>
-	/// Summary for MyForm
-	/// </summary>
-	public ref class MyForm : public System::Windows::Forms::Form
-	{
-	public:
-		MyForm(void)
-		{
-			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
-		}
+    /// <summary>
+    /// Summary for MyForm
+    /// </summary>
+    public ref class MyForm : public System::Windows::Forms::Form
+    {
+    public:
+        MyForm(void)
+        {
+            InitializeComponent();
+            //
+            //TODO: Add the constructor code here
+            //
+        }
 
-	protected:
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		~MyForm()
-		{
-			if (components)
-			{
-				delete components;
-			}
-		}
-	private: System::Windows::Forms::Label^ label2;
-	protected:
-	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::Label^ label3;
-	private: System::Windows::Forms::TextBox^ textBox2;
+    protected:
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        ~MyForm()
+        {
+            if (components)
+            {
+                delete components;
+            }
+        }
+    private: System::Windows::Forms::Label^ label2;
+    protected:
+    private: System::Windows::Forms::Label^ label1;
+    private: System::Windows::Forms::TextBox^ textBox1;
+    private: System::Windows::Forms::Button^ button1;
+    private: System::Windows::Forms::Label^ label3;
+    private: System::Windows::Forms::TextBox^ textBox2;
     private: System::Windows::Forms::TextBox^ textBox3;
     private: System::Windows::Forms::Label^ label4;
     private: System::Windows::Forms::ContextMenuStrip^ contextMenuStrip1;
@@ -66,19 +66,19 @@ namespace $safeprojectname$ {
 
 
 
-	private:
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
+    private:
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
 
 
 #pragma region Windows Form Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		void InitializeComponent(void)
-		{
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        void InitializeComponent(void)
+        {
             this->components = (gcnew System::ComponentModel::Container());
             this->label2 = (gcnew System::Windows::Forms::Label());
             this->label1 = (gcnew System::Windows::Forms::Label());
@@ -259,7 +259,7 @@ namespace $safeprojectname$ {
         }
 
 
-		//=======================================================================================================
+        //=======================================================================================================
 
 
         std::string slotToString(int num) {
@@ -269,12 +269,12 @@ namespace $safeprojectname$ {
             }
             else {
                 if (num >= 1 && num <= 24) {
-                    if(num-1 >= 10)
+                    if (num - 1 >= 10)
                         slot = "MON " + std::to_string(num - 1) + "-" + std::to_string(num);
-                    else if(num - 1 == 9)
-						slot = "MON 0" + std::to_string(num - 1) + "-" + std::to_string(num);
-					else
-						slot = "MON 0" + std::to_string(num - 1) + "-0" + std::to_string(num);
+                    else if (num - 1 == 9)
+                        slot = "MON 0" + std::to_string(num - 1) + "-" + std::to_string(num);
+                    else
+                        slot = "MON 0" + std::to_string(num - 1) + "-0" + std::to_string(num);
                 }
                 else if (num >= 25 && num <= 48) {
                     if (num - 25 >= 10)
@@ -285,44 +285,44 @@ namespace $safeprojectname$ {
                         slot = "TUE 0" + std::to_string(num - 25) + "-0" + std::to_string(num - 24) + "  ";
                 }
                 else if (num >= 49 && num <= 72) {
-                    if(num - 49 >= 10)
-						slot = "WED " + std::to_string(num - 49) + "-" + std::to_string(num - 48);
-					else if (num - 49 == 9)
-						slot = "WED 0" + std::to_string(num - 49) + "-" + std::to_string(num - 48);
-					else
-						slot = "WED 0" + std::to_string(num - 49) + "-0" + std::to_string(num - 48);
+                    if (num - 49 >= 10)
+                        slot = "WED " + std::to_string(num - 49) + "-" + std::to_string(num - 48);
+                    else if (num - 49 == 9)
+                        slot = "WED 0" + std::to_string(num - 49) + "-" + std::to_string(num - 48);
+                    else
+                        slot = "WED 0" + std::to_string(num - 49) + "-0" + std::to_string(num - 48);
                 }
                 else if (num >= 73 && num <= 96) {
-                    if(num - 73 >= 10)
+                    if (num - 73 >= 10)
                         slot = "THU " + std::to_string(num - 73) + "-" + std::to_string(num - 72) + " ";
                     else if (num - 73 == 9)
                         slot = "THU 0" + std::to_string(num - 73) + "-" + std::to_string(num - 72) + " ";
-					else
-						slot = "THU 0" + std::to_string(num - 73) + "-0" + std::to_string(num - 72) + " ";
+                    else
+                        slot = "THU 0" + std::to_string(num - 73) + "-0" + std::to_string(num - 72) + " ";
                 }
                 else if (num >= 97 && num <= 120) {
-                    if(num - 97 >= 10)
-						slot = "FRI " + std::to_string(num - 97) + "-" + std::to_string(num - 96) + "   ";
-					else if (num - 97 == 9)
-						slot = "FRI 0" + std::to_string(num - 97) + "-" + std::to_string(num - 96) + "   ";
+                    if (num - 97 >= 10)
+                        slot = "FRI " + std::to_string(num - 97) + "-" + std::to_string(num - 96) + "   ";
+                    else if (num - 97 == 9)
+                        slot = "FRI 0" + std::to_string(num - 97) + "-" + std::to_string(num - 96) + "   ";
                     else
                         slot = "FRI 0" + std::to_string(num - 97) + "-0" + std::to_string(num - 96) + "   ";
                 }
                 else if (num >= 121 && num <= 144) {
-                    if(num - 121 >= 10)
-						slot = "SAT " + std::to_string(num - 121) + "-" + std::to_string(num - 120) + "  ";
-					else if (num - 121 == 9)
-						slot = "SAT 0" + std::to_string(num - 121) + "-" + std::to_string(num - 120) + "  ";
-					else
-						slot = "SAT 0" + std::to_string(num - 121) + "-0" + std::to_string(num - 120) + "  ";
+                    if (num - 121 >= 10)
+                        slot = "SAT " + std::to_string(num - 121) + "-" + std::to_string(num - 120) + "  ";
+                    else if (num - 121 == 9)
+                        slot = "SAT 0" + std::to_string(num - 121) + "-" + std::to_string(num - 120) + "  ";
+                    else
+                        slot = "SAT 0" + std::to_string(num - 121) + "-0" + std::to_string(num - 120) + "  ";
                 }
                 else if (num >= 145 && num <= 168) {
-                    if(num - 145 >= 10)
+                    if (num - 145 >= 10)
                         slot = "SUN " + std::to_string(num - 145) + "-" + std::to_string(num - 144) + " ";
                     else if (num - 145 == 9)
                         slot = "SUN 0" + std::to_string(num - 145) + "-" + std::to_string(num - 144) + " ";
-					else
-						slot = "SUN 0" + std::to_string(num - 145) + "-0" + std::to_string(num - 144) + " ";
+                    else
+                        slot = "SUN 0" + std::to_string(num - 145) + "-0" + std::to_string(num - 144) + " ";
                 }
             }
             return slot;
@@ -554,7 +554,28 @@ namespace $safeprojectname$ {
                             }
                         }
                         else if (slotVsSeries[i][j] == mAX[2]) {
-                            if ((slotVsSeries[i][seriesTotal] < slotVsSeries[mAX[0]][seriesTotal]) && (i != mAX[0])) {
+                            cURR.clear();
+                            for (int k = 0; k < memTotal; k++) {
+                                if (memVsSlot[k][i] == true && memVsSeries[k][j] == true) {
+                                    cURR.push_back(k);
+                                }
+                            }
+                            int sum = 0, count1 = 0, count2 = 0;
+                            for (int k = 0; k < slotTotal; k++) {
+                                for (int l = 0; l < cURR.size(); ++l) {
+                                    if (memVsSlot[cURR[l]][k] == true && memVsSeries[cURR[l]][j] == true) {
+                                        count1++;
+                                    }
+                                }
+                            }
+                            for (int k = 0; k < slotTotal; k++) {
+                                for (int l = 3; l < mAX.size(); ++l) {
+                                    if (memVsSlot[mAX[l]][k] == true && memVsSeries[mAX[l]][j] == true) {
+                                        count2++;
+                                    }
+                                }
+                            }
+                            if (count1 < count2) {
                                 mAX.clear();
                                 mAX.push_back(i);
                                 mAX.push_back(j);
@@ -565,40 +586,7 @@ namespace $safeprojectname$ {
                                     }
                                 }
                             }
-                            else if ((slotVsSeries[i][seriesTotal] == slotVsSeries[mAX[0]][seriesTotal]) || (i == mAX[0])) {
-                                cURR.clear();
-                                for (int k = 0; k < memTotal; k++) {
-                                    if (memVsSlot[k][i] == true && memVsSeries[k][j] == true) {
-                                        cURR.push_back(k);
-                                    }
-                                }
-                                int sum = 0, count1 = 0, count2 = 0;
-                                for (int k = 0; k < slotTotal; k++) {
-                                    for (int l = 0; l < cURR.size(); ++l) {
-                                        if (memVsSlot[cURR[l]][k] == true && memVsSeries[cURR[l]][j] == true) {
-                                            count1++;
-                                        }
-                                    }
-                                }
-                                for (int k = 0; k < slotTotal; k++) {
-                                    for (int l = 3; l < mAX.size(); ++l) {
-                                        if (memVsSlot[mAX[l]][k] == true && memVsSeries[mAX[l]][j] == true) {
-                                            count2++;
-                                        }
-                                    }
-                                }
-                                if (count1 < count2) {
-                                    mAX.clear();
-                                    mAX.push_back(i);
-                                    mAX.push_back(j);
-                                    mAX.push_back(slotVsSeries[i][j]);
-                                    for (int k = 0; k < memTotal; k++) {
-                                        if (memVsSlot[k][i] == true && memVsSeries[k][j] == true) {
-                                            mAX.push_back(k);
-                                        }
-                                    }
-                                }
-                            }
+
                         }
 
                     }
@@ -612,9 +600,9 @@ namespace $safeprojectname$ {
                     count++;
                 }
                 else {
-					textBox3->Text += gcnew String(slotToString(mAX[0]).c_str()) + " --> " + gcnew String((show[mAX[1]]).c_str()) + Environment::NewLine;
-					count++;
-				}
+                    textBox3->Text += gcnew String(slotToString(mAX[0]).c_str()) + " --> " + gcnew String((show[mAX[1]]).c_str()) + Environment::NewLine;
+                    count++;
+                }
 
                 for (int l = 3; l < mAX.size(); l++) {
                     for (int k = 0; k < slotTotal; k++) {
@@ -646,17 +634,16 @@ namespace $safeprojectname$ {
             }
         }
 
-
-		//=======================================================================================================
+        //=======================================================================================================
 
 #pragma endregion
-private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-    int totalNames = 0;
-    std::string filePath = msclr::interop::marshal_as<std::string>(textBox1->Text);
-	input(filePath, sIZE, totalNames, memVsSeries, memVsSlot);
-	storeSlotVsSeries(totalNames, 168, sIZE);
-	findMax(totalNames, 168, sIZE);
-    showRemainedMembers(totalNames, sIZE);
-}
-};
+    private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+        int totalNames = 0;
+        std::string filePath = msclr::interop::marshal_as<std::string>(textBox1->Text);
+        input(filePath, sIZE, totalNames, memVsSeries, memVsSlot);
+        storeSlotVsSeries(totalNames, 168, sIZE);
+        findMax(totalNames, 168, sIZE);
+        showRemainedMembers(totalNames, sIZE);
+    }
+    };
 }
