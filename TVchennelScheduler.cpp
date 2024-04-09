@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -10,6 +9,7 @@
 #include <queue>
 using namespace std; 
 
+// Global variables
 vector<vector<bool>> memVsSeries;
 vector<vector<bool>> memVsSlot;
 vector<vector<int>> slotVsSeries;
@@ -17,6 +17,7 @@ vector<string> show;
 vector<string> Name;
 priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
 
+// converts slot(string) to integer from 1 to 168
 int Slottoint(string s)
 {
     char str[4];
@@ -79,6 +80,7 @@ int Slottoint(string s)
     return -1; 
 }
 
+// converts integer slot(1-168) to string slot(MON 0-1, TUE 0-1, ...)
 string slotToString(int num){
     string slot;
     num++;
@@ -111,7 +113,8 @@ string slotToString(int num){
     return slot;
 }
 
-void input(string &filePath, int &seriesTotal, int &memTotal, vector<vector<bool>> &memVsSeries, vector<vector<bool>> &memVsSlot, vector<int> &countAvailableslots, vector<int> &countfavoriteshows)
+// reads input from file
+void input(string &filePath, int &seriesTotal, int &memTotal, vector<vector<bool>> &memVsSeries, vector<vector<bool>> &memVsSlot)
 {
     ifstream inputFile(filePath);
 
@@ -154,15 +157,12 @@ void input(string &filePath, int &seriesTotal, int &memTotal, vector<vector<bool
     Name.resize(memTotal);
     memVsSeries.resize(memTotal);
     memVsSlot.resize(memTotal);
-    countAvailableslots.resize(memTotal);
-    countfavoriteshows.resize(memTotal);
 
-
-    for (size_t i = 0; i < memTotal; i++)
-    {
+    for (size_t i = 0; i < memTotal; i++) {
         memVsSeries[i].resize(seriesTotal, false);
         memVsSlot[i].resize(168, false);
     }
+    
     for(int k = 0 ; k< memTotal; k++){
         getline(inputFile, line);
         Name[k] = line;
@@ -172,6 +172,7 @@ void input(string &filePath, int &seriesTotal, int &memTotal, vector<vector<bool
         stringstream sl(line);
         string token;
         int countAvailslots = 0;
+
         while (getline(sl, token, ',')) {
             if (token == "\n") break;
             token.erase(0, token.find_first_not_of(' '));
@@ -181,12 +182,12 @@ void input(string &filePath, int &seriesTotal, int &memTotal, vector<vector<bool
             countAvailslots++;
             }
         }
-        countAvailableslots[k] = countAvailslots;
 
         int countfavoriteshow = 0;
         getline(inputFile, line);
         stringstream sh(line);
         string token2;
+
         while (getline(sh, token2, ','))
         {
             if (token2 == "\n") break;
@@ -197,16 +198,18 @@ void input(string &filePath, int &seriesTotal, int &memTotal, vector<vector<bool
             if (token2 == show[j]){ memVsSeries[k][j] = true; countfavoriteshow++;}
             }
         }
-        countfavoriteshows[k] = countfavoriteshow;
     }  
     inputFile.close();
 }
 
+// stores the number of members who are available for slot (i) and has the favorite series (j)
 void storeSlotVsSeries(int memTotal,int slotTotal, int seriesTotal){
     slotVsSeries.resize(168);
+
     for(int i = 0; i < 168; i++){
-        slotVsSeries[i].resize(seriesTotal+1, 0);
+        slotVsSeries[i].resize(seriesTotal, 0);
     }
+
     for(int i = 0; i < 168; i++){
         for(int j = 0; j < seriesTotal; j++){
             for(int k = 0; k < memTotal; k++){
@@ -214,11 +217,11 @@ void storeSlotVsSeries(int memTotal,int slotTotal, int seriesTotal){
                     slotVsSeries[i][j]++;
                 }
             }
-            slotVsSeries[i][seriesTotal] += slotVsSeries[i][j];
         }
     }
 }
 
+// schedules series in the slot where the maximum number of members are available
 void findMax(int memTotal, int slotTotal, int seriesTotal){
     vector<int> mAX(3);
     vector<int> cURR; 
@@ -228,6 +231,7 @@ void findMax(int memTotal, int slotTotal, int seriesTotal){
         mAX[2] = 0;
         mAX[1] = 0;
         mAX[0] = 0;
+
         for(int i = 0; i < 168; i++){
             for(int j = 0; j < seriesTotal; j++){
                 if(slotVsSeries[i][j] > mAX[2]){
@@ -235,6 +239,7 @@ void findMax(int memTotal, int slotTotal, int seriesTotal){
                     mAX.push_back(i);
                     mAX.push_back(j);
                     mAX.push_back(slotVsSeries[i][j]);
+
                     for(int k = 0; k < memTotal; k++){
                         if(memVsSlot[k][i] == true && memVsSeries[k][j] == true){
                             mAX.push_back(k);
@@ -242,48 +247,39 @@ void findMax(int memTotal, int slotTotal, int seriesTotal){
                     } 
                 }
                 else if(slotVsSeries[i][j] == mAX[2]){
-                    if((slotVsSeries[i][seriesTotal] < slotVsSeries[mAX[0]][seriesTotal])  && (i != mAX[0])){
+                    cURR.clear();
+                    for(int k = 0; k < memTotal; k++){
+                        if(memVsSlot[k][i] == true && memVsSeries[k][j] == true){
+                            cURR.push_back(k);
+                        }
+                    } 
+                    int count1 = 0, count2 = 0;
+
+                    for(int k = 0; k < 168; k++){
+                        for(int l = 0; l < cURR.size(); ++l){
+                            if(memVsSlot[cURR[l]][k] == true && memVsSeries[cURR[l]][j] == true){
+                                count1++;
+                            }
+                        }
+
+                        for(int l = 3; l < mAX.size(); ++l){
+                            if(memVsSlot[mAX[l]][k] == true && memVsSeries[mAX[l]][j] == true){
+                                count2++;
+                            }
+                        }
+                    }
+                    // if the current slot and series has more members than the previous slot and series
+                    if(count1 < count2){
                         mAX.clear();
                         mAX.push_back(i);
                         mAX.push_back(j);
                         mAX.push_back(slotVsSeries[i][j]);
+
                         for(int k = 0; k < memTotal; k++){
                             if(memVsSlot[k][i] == true && memVsSeries[k][j] == true){
                                 mAX.push_back(k);
                             }
                         } 
-                    }
-                    else if((i == mAX[0]) || (slotVsSeries[i][seriesTotal] == slotVsSeries[mAX[0]][seriesTotal])){
-                    cURR.clear();
-                        for(int k = 0; k < memTotal; k++){
-                            if(memVsSlot[k][i] == true && memVsSeries[k][j] == true){
-                                cURR.push_back(k);
-                            }
-                        } 
-                        int count1 = 0, count2 = 0;
-                        for(int k = 0; k < 168; k++){
-                            for(int l = 0; l < cURR.size(); ++l){
-                                if(memVsSlot[cURR[l]][k] == true && memVsSeries[cURR[l]][j] == true){
-                                    count1++;
-                                }
-                            }
-                            for(int l = 3; l < mAX.size(); ++l){
-                            if(memVsSlot[mAX[l]][k] == true && memVsSeries[mAX[l]][j] == true){
-                                count2++;
-                            }
-                            }
-                        }
-                        if(count1 < count2){
-                            mAX.clear();
-                            mAX.push_back(i);
-                            mAX.push_back(j);
-                            mAX.push_back(slotVsSeries[i][j]);
-                            for(int k = 0; k < memTotal; k++){
-                                if(memVsSlot[k][i] == true && memVsSeries[k][j] == true){
-                                    mAX.push_back(k);
-                                }
-                            } 
-                        }
                     }
                 }
             }
@@ -292,33 +288,36 @@ void findMax(int memTotal, int slotTotal, int seriesTotal){
         {
             return;
         }
-        
         pq.push(make_pair(mAX[0], mAX[1]));
 
+       // removing the members who are scheduled for the current slot and series
         for(int l= 3; l < mAX.size(); l++){
             for(int k = 0; k < 168; k++){
                 if(memVsSlot[mAX[l]][k] == true && memVsSeries[mAX[l]][mAX[1]] == true){
                     slotVsSeries[k][mAX[1]]--;
-                    slotVsSeries[k][seriesTotal]--;
                 }
             }
             memVsSeries[mAX[l]][mAX[1]] = false;
         }
-
+  
         for(int k = 0; k < memTotal; k++){
             memVsSlot[k][mAX[0]] = false;
         }
-        for(int k = 0; k < seriesTotal+1; k++){
+
+        for(int k = 0; k < seriesTotal; k++){
             slotVsSeries[mAX[0]][k] = 0;
         }
-    } while (mAX[2] != 0);
 
+    } while (mAX[2] != 0);
 }
 
+// displays the remaining members who will miss the show
 void showRemainedMembers(int memTotal, int seriesTotal) {
-    cout << "========================================================================\n";
+
+    cout << "------------------------------------------------------------------------\n";
     cout << "Remaining members: \n";
-    cout << "========================================================================\n";
+    cout << "------------------------------------------------------------------------\n";
+
     for(int i = 0; i < memTotal; ++i) {
         for(int j = 0; j < seriesTotal; ++j) {
             if(memVsSeries[i][j] == true) {
@@ -329,27 +328,41 @@ void showRemainedMembers(int memTotal, int seriesTotal) {
     cout << "========================================================================\n";
 }
 
+// ====== MAIN FUNCTION ====== //
 int main()
 {
-    string path;
-    cout << "Enter The File Path : ";
-    cin >> path;
-    int seriesTotal=0;
+    bool count = true;
+    while (count)
+    {
+        string path;
+        cout << "Enter The File Path : ";
+        cin >> path;
 
-    vector<int> countAvailableslots;
-    vector<int> countfavoriteshows;
-    int memTotal= 0;
-    input(path, seriesTotal, memTotal, memVsSeries, memVsSlot, countAvailableslots, countfavoriteshows);
-    storeSlotVsSeries(memTotal, 168, seriesTotal);
-    findMax(memTotal, 168, seriesTotal);
-    showRemainedMembers(memTotal, seriesTotal);
-    cout << "The schedule is as follows: \n";
-    cout << "========================================================================\n";
-    while(!pq.empty()){
-        pair<int, int> p = pq.top();
-        pq.pop();
-        cout << slotToString(p.first) << " : " << show[p.second] << endl;
+        int seriesTotal=0;
+        int memTotal= 0;
+
+        input(path, seriesTotal, memTotal, memVsSeries, memVsSlot);
+
+        storeSlotVsSeries(memTotal, 168, seriesTotal);
+
+        findMax(memTotal, 168, seriesTotal);
+
+        cout << "========================================================================\n";
+        cout << "                             THE SCHEDULE";
+        cout << "\n========================================================================\n";
+        
+        while(!pq.empty()){
+            pair<int, int> p = pq.top();
+            pq.pop();
+            cout << setw(10) << left << slotToString(p.first) << " : " << show[p.second] << endl;
+        }
+       
+        showRemainedMembers(memTotal, seriesTotal);
+       
+        cout << "Do you want to schedule another file? (1/0) : ";
+        cin >> count;
+
     }
-    cout << "========================================================================\n";
+
     return 0;
 }
