@@ -12,6 +12,8 @@ using namespace std;
 // Global variables
 vector<vector<bool>> memVsSeries;
 vector<vector<bool>> memVsSlot;
+vector<vector<bool>> memVsSeries2;
+vector<vector<bool>> memVsSlot2;
 vector<vector<int>> slotVsSeries;
 vector<string> show;
 vector<string> Name;
@@ -157,12 +159,16 @@ void input(string &filePath, int &seriesTotal, int &memTotal, vector<vector<bool
     Name.resize(memTotal);
     memVsSeries.resize(memTotal);
     memVsSlot.resize(memTotal);
+    memVsSeries2.resize(memTotal);
+    memVsSlot2.resize(memTotal);
 
-    for (size_t i = 0; i < memTotal; i++) {
+    for (size_t i = 0; i < memTotal; i++)
+    {
         memVsSeries[i].resize(seriesTotal, false);
         memVsSlot[i].resize(168, false);
+        memVsSeries2[i].resize(seriesTotal, false);
+        memVsSlot2[i].resize(168, false);
     }
-    
     for(int k = 0 ; k< memTotal; k++){
         getline(inputFile, line);
         Name[k] = line;
@@ -172,13 +178,12 @@ void input(string &filePath, int &seriesTotal, int &memTotal, vector<vector<bool
         stringstream sl(line);
         string token;
         int countAvailslots = 0;
-
         while (getline(sl, token, ',')) {
             if (token == "\n") break;
             token.erase(0, token.find_first_not_of(' '));
             token.erase(token.find_last_not_of(' ') + 1);
             int slot = Slottoint(token);
-            if (slot >= 0 && slot < 168) {memVsSlot[k][slot-1] = true; 
+            if (slot >= 0 && slot < 168) {memVsSlot[k][slot] = true; memVsSlot2[k][slot] = true;
             countAvailslots++;
             }
         }
@@ -187,7 +192,6 @@ void input(string &filePath, int &seriesTotal, int &memTotal, vector<vector<bool
         getline(inputFile, line);
         stringstream sh(line);
         string token2;
-
         while (getline(sh, token2, ','))
         {
             if (token2 == "\n") break;
@@ -195,7 +199,7 @@ void input(string &filePath, int &seriesTotal, int &memTotal, vector<vector<bool
             token2.erase(token2.find_last_not_of(' ') + 1);
             for (size_t j = 0; j < seriesTotal; j++)
             {
-            if (token2 == show[j]){ memVsSeries[k][j] = true; countfavoriteshow++;}
+            if (token2 == show[j]){ memVsSeries[k][j] = true;memVsSeries2[k][j] = true; countfavoriteshow++;}
             }
         }
     }  
@@ -325,44 +329,122 @@ void showRemainedMembers(int memTotal, int seriesTotal) {
             }
         }
     }
-    cout << "========================================================================\n";
 }
+
+void schedule(string path){
+    int seriesTotal = 0;
+
+    int memTotal = 0;
+    input(path, seriesTotal, memTotal, memVsSeries, memVsSlot);
+    storeSlotVsSeries(memTotal, 168, seriesTotal);
+    findMax(memTotal, 168, seriesTotal);
+    cout << "========================================================================\n";
+    cout << "                           THE SCHEDULE\n";
+    cout << "========================================================================\n";
+    while(!pq.empty()){
+        pair<int, int> p = pq.top();
+        pq.pop();
+        cout << setw(10) << left << slotToString(p.first) << " : " << show[p.second] << endl;
+    }
+    showRemainedMembers(memTotal, seriesTotal);
+    cout << "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n";
+}
+
+// displays the schedule of a person
+void scheduleOfPerson(string name, string path){    
+    int seriesTotal= 0;
+    int memTotal= 0;
+    input(path, seriesTotal, memTotal, memVsSeries, memVsSlot);
+    storeSlotVsSeries(memTotal, 168, seriesTotal);
+    
+    int memNUM = -1;
+    for(int i = 0; i < memTotal; i++){
+        if(Name[i] == name){
+            memNUM = i;
+            break;
+        }
+    }
+    if(memNUM == -1){
+        cout << "No such person found!" << endl;
+        return;
+    }
+
+    findMax(memTotal, 168, seriesTotal);    
+
+    bool found = false;    
+    pair<int, int> p;
+    cout << "------------------------------------------------------------------------\n";
+    cout << "Schedule of " << name << ":\n";
+    while (!pq.empty()) {
+        p = pq.top();
+        pq.pop();
+        int a = p.first;
+        int b = p.second;
+        int c = memNUM;
+
+        if(memVsSlot2[c][a]){
+            if(memVsSeries2[c][b]){
+                cout << setw(10) << left << slotToString(p.first) << " : " << show[p.second] << endl;
+                found = true;
+            }
+            else{
+                cout << setw(10) << left << slotToString(p.first) << " : No show" << endl;
+                found = true;
+            }
+        }
+    }
+    if (!found) {
+        cout << "No schedule found" << endl;
+        return;
+    } 
+    cout << "------------------------------------------------------------------------\n";   
+}
+
 
 // ====== MAIN FUNCTION ====== //
 int main()
 {
-    bool count = true;
-    while (count)
+    int a;
+    do
     {
-        string path;
-        cout << "Enter The File Path : ";
-        cin >> path;
-
-        int seriesTotal=0;
-        int memTotal= 0;
-
-        input(path, seriesTotal, memTotal, memVsSeries, memVsSlot);
-
-        storeSlotVsSeries(memTotal, 168, seriesTotal);
-
-        findMax(memTotal, 168, seriesTotal);
-
-        cout << "========================================================================\n";
-        cout << "                             THE SCHEDULE";
-        cout << "\n========================================================================\n";
-        
-        while(!pq.empty()){
-            pair<int, int> p = pq.top();
-            pq.pop();
-            cout << setw(10) << left << slotToString(p.first) << " : " << show[p.second] << endl;
+        cout << "\n\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n";
+        cout << "Welcome to TV Channel Scheduler!\n";
+        cout << "1. Schedule TV Shows\n";
+        cout << "2. Show Schedule of a person\n";
+        cout << "0. Exit\n";
+        cout << "Enter your choice : ";
+        cin >> a;
+        if(a == 1){
+            string path;
+            cout << "Enter The File Path : ";
+            cin >> path;
+            schedule(path);
         }
-       
-        showRemainedMembers(memTotal, seriesTotal);
-       
-        cout << "Do you want to schedule another file? (1/0) : ";
-        cin >> count;
-
-    }
+        else if(a == 2){
+            string filePath;
+            cout << "Enter path of the file : ";
+            cin >> filePath;
+            cout << "Name of the person : ";
+            string name;
+            cin >> name;
+            scheduleOfPerson(name, filePath);
+        }
+        else if(a == 0){
+            cout << "do you really want to exit? (Y/N) : " ;
+            char c;
+            cin >> c;
+            if(c == 'Y' || c == 'y'){
+                cout << "Thank you for using our TV Channel Scheduler!" << endl;
+            }
+            else{
+                a = 1;
+            }
+        }
+        else{
+            cout << "Invalid input!" << endl;
+        }
+        
+    } while (a);
 
     return 0;
 }
