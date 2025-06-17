@@ -26,7 +26,6 @@ Comments:
 ## Features
 - **Scheduling Management:** Records favorite TV series for family members and schedules them based on availability.
 - **Conflict Resolution:** Detects overlapping availability slots to prevent scheduling conflicts.
-- **Notification System:** Alerts members about scheduled slots during their free time.
 - **Minimizes Missed Episodes:** Ensures members can catch up with their favorite series without clashes.
 
 ---
